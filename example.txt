@@ -1,0 +1,15 @@
+def rbc = WS.callTestCase(findTestCase("api_Account/CreateUser/CreateUser_AuthTokenCookie_Code200_superAdmin"),
+	["firstName":"exampleFirstName",
+		"lastName":"exampleLastName",
+		"email":"exampleFake@fakeEmail.com"])
+String t = "kjladfl;kadj ;fkljasd fl;jasdkl fjasdfasdjfl kjasdHELLOkjdflk adjflk asdjflkja sdf"
+def r = t.contains("HELLO")
+println(r)
+
+
+def jS = new JsonSlurper()
+def object = jS.parseText(rbc)
+uI = object.UserIdentity.UserID
+
+WS.callTestCase(findTestCase("api_Account/GetRegistrationLink/GetRegistrationLink_AuthTokenCookie_Code200"),
+	["userID":uI])
